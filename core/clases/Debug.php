@@ -156,10 +156,9 @@ final class Debug
         }
     }
 
-    private static function generar($imprimir = FALSE)
-    {
+    private static function generar($imprimir = FALSE){
 
-        if (self::$habilitado !== TRUE) {
+        if(self::$habilitado !== TRUE){
             return FALSE;
         }
 
@@ -167,36 +166,36 @@ final class Debug
         echo '<div id="debug_" style="text-align:left;margin:20px;"><h1>DEBUG</h1>';
 
         $deb = self::get(TRUE);
-        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_tiempos\').style.display == \'none\'){document.getElementById(\'debug_tiempos\').style.display = \'block\';}else{document.getElementById(\'debug_tiempos\').style.display = \'none\';}">TIEMPOS y MEMORIA - ' . count($deb) . '</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_tiempos\').style.display == \'none\'){document.getElementById(\'debug_tiempos\').style.display = \'block\';}else{document.getElementById(\'debug_tiempos\').style.display = \'none\';};">TIEMPOS y MEMORIA - '.count($deb).'</h2>';
         echo '<div id="debug_tiempos" style="display:block">';
         $tg = array_shift($deb); // Quitamos el tiempo global
-        echo '<p>Tiempo: <strong>' . $tg["tiempo"] . '</strong> segundos<br />';
-        echo 'Memoria Inicio: ' . $tg["memoria_uso_inicio"] . ' kbytes<br />';
-        echo 'Memoria Final: <strong>' . $tg["memoria_uso_fin"] . '</strong> kbytes<br />';
-        echo 'Memoria Diferencia: ' . $tg["memoria_uso_diferencia"] . ' kbytes</p>';
-        if (!empty($deb)) {
-            echo '<pre>' . print_r($deb, true) . '</pre>';
-        } else {
+        echo '<p>Tiempo: <strong>'.$tg["tiempo"].'</strong> segundos<br />';
+        echo 'Memoria Inicio: '.$tg["memoria_uso_inicio"].' kbytes<br />';
+        echo 'Memoria Final: <strong>'.$tg["memoria_uso_fin"].'</strong> kbytes<br />';
+        echo 'Memoria Diferencia: '.$tg["memoria_uso_diferencia"].' kbytes</p>';
+        if(!empty($deb)){
+            echo '<pre>'.print_r($deb,true).'</pre>';
+        }else{
             echo '<p>Nigun tiempo o memoria testeado</p>';
         }
         echo '</div>';
 
         $enrutador = Cargador::cargar("Enrutador");
-        echo ';}">ENRUTADOR</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_enrutador\').style.display == \'none\'){document.getElementById(\'debug_enrutador\').style.display = \'block\';}else{document.getElementById(\'debug_enrutador\').style.display = \'none\';};">ENRUTADOR</h2>';
         echo '<div id="debug_enrutador" style="display:none">';
-        if (!empty($enrutador)) {
-            echo '<pre>' . print_r($enrutador, true) . '</pre>';
-        } else {
+        if(!empty($enrutador)){
+            echo '<pre>'.print_r($enrutador,true).'</pre>';
+        }else{
             echo '<p>Nigun enrutador testeado</p>';
         }
         echo '</div>';
 
         $configuracion = Cargador::cargar("Configuracion");
-        echo ';}">CONFIGURACION</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_config\').style.display == \'none\'){document.getElementById(\'debug_config\').style.display = \'block\';}else{document.getElementById(\'debug_config\').style.display = \'none\';};">CONFIGURACION</h2>';
         echo '<div id="debug_config" style="display:none">';
-        if (!empty($configuracion)) {
-            echo '<pre>' . print_r($configuracion, true) . '</pre>';
-        } else {
+        if(!empty($configuracion)){
+            echo '<pre>'.print_r($configuracion,true).'</pre>';
+        }else{
             echo '<p>Niguna configuracion establecida.</p>';
         }
         echo '</div>';
@@ -211,17 +210,17 @@ final class Debug
         }*/
 
         $slqs = self::$sqls;
-        echo ';}">SQL - ' . count($slqs) . '</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_sql\').style.display == \'none\'){document.getElementById(\'debug_sql\').style.display = \'block\';}else{document.getElementById(\'debug_sql\').style.display = \'none\';};">SQL - '.count($slqs).'</h2>';
         echo '<div id="debug_sql" style="display:none">';
-        if (!empty($slqs)) {
-            echo '<pre>' . print_r($slqs, true) . '</pre>';
-        } else {
+        if(!empty($slqs)){
+            echo '<pre>'.print_r($slqs,true).'</pre>';
+        }else{
             echo '<p>Sin sql</p>';
         }
         echo '</div>';
 
         $archivos_incluidos = get_included_files();
-        echo ';}">INCLUDES y REQUIRE - ' . count($archivos_incluidos) . '</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_includes\').style.display == \'none\'){document.getElementById(\'debug_includes\').style.display = \'block\';}else{document.getElementById(\'debug_includes\').style.display = \'none\';};">INCLUDES y REQUIRE - '.count($archivos_incluidos).'</h2>';
         echo '<div id="debug_includes" style="display:none">';
 
         $core = array();
@@ -230,111 +229,111 @@ final class Debug
         $desplazamiento = strlen(BASE_PATH);
 
         foreach ($archivos_incluidos as $archivo) {
-            if (strpos($archivo, 'core' . DIRSEP, $desplazamiento) == $desplazamiento) {
+            if(strpos($archivo,'core'.DIRSEP,$desplazamiento) == $desplazamiento){
                 $core[] = $archivo;
-            } else if (strpos($archivo, 'app' . DIRSEP, $desplazamiento) == $desplazamiento) {
+            }else if(strpos($archivo,'app'.DIRSEP,$desplazamiento) == $desplazamiento){
                 $app[] = $archivo;
-            } else {
+            }else{
                 $otros[] = $archivo;
             }
         }
 
-        if (!empty($archivos_incluidos)) {
-            echo '<p>Core - ' . count($core) . '</p>';
-            echo '<pre>' . print_r($core, true) . '</pre>';
-            echo '<p>Aplicacion - ' . count($app) . '</p>';
-            echo '<pre>' . print_r($app, true) . '</pre>';
-            echo '<p>Otros - ' . count($otros) . '</p>';
-            echo '<pre>' . print_r($otros, true) . '</pre>';
-        } else {
+        if(!empty($archivos_incluidos)){
+            echo '<p>Core - '.count($core).'</p>';
+            echo '<pre>'.print_r($core,true).'</pre>';
+            echo '<p>Aplicacion - '.count($app).'</p>';
+            echo '<pre>'.print_r($app,true).'</pre>';
+            echo '<p>Otros - '.count($otros).'</p>';
+            echo '<pre>'.print_r($otros,true).'</pre>';
+        }else{
             echo '<p>Sin Achivos incluidos o requeridos</p>';
         }
         echo '</div>';
 
 
         $constantes_definidas = get_defined_constants(true);
-        echo ';}">CONSTANTES</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_const\').style.display == \'none\'){document.getElementById(\'debug_const\').style.display = \'block\';}else{document.getElementById(\'debug_const\').style.display = \'none\';};">CONSTANTES</h2>';
         echo '<div id="debug_const" style="display:none">';
-        if (!empty($constantes_definidas['user'])) {
-            echo '<pre>' . print_r($constantes_definidas['user'], true) . '</pre>';
-        } else {
+        if(!empty($constantes_definidas['user'])){
+            echo '<pre>'.print_r($constantes_definidas['user'],true).'</pre>';
+        }else{
             echo '<p>Sin Constantes</p>';
         }
         echo '</div>';
 
-        echo ';}">COOKIES: $_COOKIE</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_cookies\').style.display == \'none\'){document.getElementById(\'debug_cookies\').style.display = \'block\';}else{document.getElementById(\'debug_cookies\').style.display = \'none\';};">COOKIES: $_COOKIE</h2>';
         echo '<div id="debug_cookies" style="display:none">';
-        if (!empty($_COOKIE)) {
-            echo '<pre>' . print_r($_COOKIE, true) . '</pre>';
-        } else {
+        if(!empty($_COOKIE)){
+            echo '<pre>'.print_r($_COOKIE,true).'</pre>';
+        }else{
             echo '<p>Vacio $_COOKIE</p>';
         }
         echo '</div>';
 
-        echo ';}">VARIABLES DE ENTORNO: $_ENV</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_env\').style.display == \'none\'){document.getElementById(\'debug_env\').style.display = \'block\';}else{document.getElementById(\'debug_env\').style.display = \'none\';};">VARIABLES DE ENTORNO: $_ENV</h2>';
         echo '<div id="debug_env" style="display:none">';
-        if (!empty($_ENV)) {
-            echo '<pre>' . print_r($_ENV, true) . '</pre>';
-        } else {
+        if(!empty($_ENV)){
+            echo '<pre>'.print_r($_ENV,true).'</pre>';
+        }else{
             echo '<p>Vacio $_ENV</p>';
         }
         echo '</div>';
 
-        echo ';}">ARCHIVOS: $_FILES - ' . count($_FILES) . '</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_files\').style.display == \'none\'){document.getElementById(\'debug_files\').style.display = \'block\';}else{document.getElementById(\'debug_files\').style.display = \'none\';};">ARCHIVOS: $_FILES - '.count($_FILES).'</h2>';
         echo '<div id="debug_files" style="display:none">';
-        if (!empty($_FILES)) {
-            echo '<pre>' . print_r($_FILES, true) . '</pre>';
-        } else {
+        if(!empty($_FILES)){
+            echo '<pre>'.print_r($_FILES,true).'</pre>';
+        }else{
             echo '<p>Vacio $_FILES</p>';
         }
         echo '</div>';
 
-        echo ';}">$_GET</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_get\').style.display == \'none\'){document.getElementById(\'debug_get\').style.display = \'block\';}else{document.getElementById(\'debug_get\').style.display = \'none\';};">$_GET</h2>';
         echo '<div id="debug_get" style="display:none">';
-        if (!empty($_GET)) {
-            echo '<pre>' . print_r($_GET, true) . '</pre>';
-        } else {
+        if(!empty($_GET)){
+            echo '<pre>'.print_r($_GET,true).'</pre>';
+        }else{
             echo '<p>Vacio $_GET</p>';
         }
         echo '</div>';
 
-        echo ';}">$_POST</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_post\').style.display == \'none\'){document.getElementById(\'debug_post\').style.display = \'block\';}else{document.getElementById(\'debug_post\').style.display = \'none\';};">$_POST</h2>';
         echo '<div id="debug_post" style="display:none">';
-        if (!empty($_POST)) {
-            echo '<pre>' . print_r($_POST, true) . '</pre>';
-        } else {
+        if(!empty($_POST)){
+            echo '<pre>'.print_r($_POST,true).'</pre>';
+        }else{
             echo '<p>Vacio $_POST</p>';
         }
         echo '</div>';
 
-        echo ';}">$_REQUEST</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_request\').style.display == \'none\'){document.getElementById(\'debug_request\').style.display = \'block\';}else{document.getElementById(\'debug_request\').style.display = \'none\';};">$_REQUEST</h2>';
         echo '<div id="debug_request" style="display:none">';
-        if (!empty($_REQUEST)) {
-            echo '<pre>' . print_r($_REQUEST, true) . '</pre>';
-        } else {
+        if(!empty($_REQUEST)){
+            echo '<pre>'.print_r($_REQUEST,true).'</pre>';
+        }else{
             echo '<p>Vacio $_REQUEST</p>';
         }
         echo '</div>';
 
-        echo ';}">$_SERVER</h2>';
+        echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_server\').style.display == \'none\'){document.getElementById(\'debug_server\').style.display = \'block\';}else{document.getElementById(\'debug_server\').style.display = \'none\';};">$_SERVER</h2>';
         echo '<div id="debug_server" style="display:none">';
-        if (!empty($_SERVER)) {
-            echo '<pre>' . print_r($_SERVER, true) . '</pre>';
-        } else {
+        if(!empty($_SERVER)){
+            echo '<pre>'.print_r($_SERVER,true).'</pre>';
+        }else{
             echo '<p>Vacio $_SERVER</p>';
         }
         echo '</div>';
 
-        if (isset($_SESSION)) {
-            echo ';}">$_SESSION - ' . count($_SESSION) . '</h2>';
+        if(isset($_SESSION)){
+            echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_session\').style.display == \'none\'){document.getElementById(\'debug_session\').style.display = \'block\';}else{document.getElementById(\'debug_session\').style.display = \'none\';};">$_SESSION - '.count($_SESSION).'</h2>';
             echo '<div id="debug_session" style="display:none">';
-            if (!empty($_SESSION)) {
-                echo '<pre>' . print_r($_SESSION, true) . '</pre>';
-            } else {
+            if(!empty($_SESSION)){
+                echo '<pre>'.print_r($_SESSION,true).'</pre>';
+            }else{
                 echo '<p>Vacio $_SESSION</p>';
             }
-        } else {
-            echo ';}">$_SESSION - 0</h2>';
+        }else{
+            echo '<h2 style="cursor:pointer;" onclick="if(document.getElementById(\'debug_session\').style.display == \'none\'){document.getElementById(\'debug_session\').style.display = \'block\';}else{document.getElementById(\'debug_session\').style.display = \'none\';};">$_SESSION - 0</h2>';
             echo '<div id="debug_session" style="display:none">';
             echo '<p>Sin sesion</p>';
         }
@@ -344,9 +343,9 @@ final class Debug
         $datos = ob_get_contents();
         ob_end_clean();
 
-        if ($imprimir === TRUE) {
+        if($imprimir === TRUE){
             echo $datos;
-        } else {
+        }else{
             return $datos;
         }
     }
