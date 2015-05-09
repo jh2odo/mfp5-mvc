@@ -23,32 +23,29 @@
 <meta name="robots" content="<?php echo ((isset($robots)==TRUE)?$robots:'noindex,nofollow'); ?>" />
 
 <?php
-	
-//Cargador::cargar('Libreria')->JsManager->loadJquery();
-//Cargador::cargar('Libreria')->JsManager->addPngFix();
 
-    	if(isset($css)){
-			foreach ($css as $elemento){
-				Cargador::cargar('Libreria')->CssManager->addCSS($elemento["nombre"],$elemento["extension"]);
-				echo "\n";
-			}
-    	}
+    if (isset($css)) {
+        foreach ($css as $elemento) {
+            Cargador::cargar('Helper')->Xhtml->addCSS($base_url . 'css/' . $elemento["nombre"] . '.' . $elemento["extension"]);
+            echo "\n";
+        }
+    }
+
+    if (isset($js)) {
+        foreach ($js as $elemento) {
+            if (isset($elemento["nombre"])) {
+                Cargador::cargar('Helper')->Xhtml->loadScript($base_url . 'js/' . $elemento["nombre"]);
+            } else if (isset($elemento["script"])) {
+                echo $elemento["script"] . "\n";
+            }
+        }
+    }
     	
-    	if(isset($js)){
-			foreach ($js as $elemento){
-				if(isset($elemento["nombre"])){
-					Cargador::cargar('Libreria')->JsManager->loadScript($elemento["nombre"]);
-				}else if(isset($elemento["script"])){
-					echo $elemento["script"]."\n";
-				}
-			}
-    	}
-    	
-    	if(isset($extras)){
-			foreach ($extras as $extra){
-				echo $extra."\n";
-			}
-    	}
+    if(isset($extras)){
+        foreach ($extras as $extra){
+            echo $extra."\n";
+        }
+    }
 ?>
 <link rel="canonical" href="<?php echo ((isset($canonical)==TRUE)?$canonical:($base_url.Cargador::cargar('Enrutador')->getRuta())); ?>" />
 <base href="<?php echo $base_url; ?>" />

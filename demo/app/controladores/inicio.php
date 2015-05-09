@@ -178,7 +178,7 @@ class inicio extends Controlador{
         $head["descripcion"] = 'Demo de uso de mini framework';
         $head["robots"] = 'noindex,follow';
         $head["charset_encoding"] = Cargador::cargar('Configuracion')->CHARSET_ENCODING;
-        $head["css"] = NULL;
+        $head["css"][] = array("nombre"=>"general","extension"=>"css");
         $head["js"] = NULL;
         $head["extras"] = NULL;
 
