@@ -50,20 +50,20 @@ Es necesario añadir en el fichero local "hosts" la IP para el nombrado de domin
 
 1. En el fichero "hosts" del PC, hay que añadir en modo administrador: 
 
-    127.0.0.1   mfp5.dev
-    localhost   mfp5.dev
-
-Ejemplo:
-
+    - 127.0.0.1   mfp5.dev
+    - localhost   mfp5.dev
+    
+    Ejemplo:
+    
     - Linux: /etc/hosts
     - Windows: C:\Windows\System32\drivers\etc\hosts
     
-2.  Ir al directorio donde descargó la aplicacion y configurar si es necesario los parametros de su 
+2. Ir al directorio donde descargó la aplicacion y configurar si es necesario los parametros de su 
 aplicación los ficheros: 
 
-- /demo/app/configuracion/configuracion.php
-- /demo/app/configuracion/rutas.php
-- /demo/app/configuracion/cache.php
+    - /demo/app/configuracion/configuracion.php
+    - /demo/app/configuracion/rutas.php
+    - /demo/app/configuracion/cache.php
 
 3. Crear la base de datos "demo" e importar el fichero /demo/docs/demo.sql para que funcione correctamente.
 
