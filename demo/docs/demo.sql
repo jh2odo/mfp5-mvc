@@ -19,13 +19,16 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Base de datos: `demo`
 --
 
+CREATE DATABASE IF NOT EXISTS `demo`;
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tarea`
 --
 
-CREATE TABLE IF NOT EXISTS `tarea` (
+DROP TABLE IF EXISTS `tarea`;
+CREATE TABLE `tarea` (
   `id_tarea` int(11) NOT NULL AUTO_INCREMENT,
   `titulo_tarea` varchar(100) NOT NULL,
   PRIMARY KEY (`id_tarea`)
